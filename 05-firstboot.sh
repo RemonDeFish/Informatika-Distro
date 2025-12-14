@@ -42,19 +42,19 @@ cat << "EOF"
 EOF
 
 echo
-echo "[*] First boot initialization started..."
+echo "[*] First boot initialization Dimulai..."
 echo "[*] Log file : $LOGFILE"
 sleep 2
 
 # -----------------------------------------------------
 # Check internet connection
 # -----------------------------------------------------
-echo "[*] Checking internet connection..."
+echo "[*] Mengecek koneksi internet..."
 if ping -c 1 8.8.8.8 >/dev/null 2>&1; then
-    echo "[✓] Internet connection available"
+    echo "[✓] Ada koneksi internet!"
     apt update
 else
-    echo "[!] No internet connection detected"
+    echo "[!] Tidak ada koneksi"
     echo "[!] Skipping system update"
 fi
 
@@ -74,8 +74,8 @@ echo "Date     : $(date)"
 echo
 echo "-----------------------------------------------------"
 echo " NOTICE:"
-echo " This system is running in LIVE LAB MODE."
-echo " All user data will be erased after reboot."
+echo " Sistem ini berjalan dalam mode LIVE LAB."
+echo " Semua data user akan hilang setelah reboot."
 echo "-----------------------------------------------------"
 
 sleep 2
@@ -84,10 +84,10 @@ sleep 2
 # Disable first boot autostart (run once)
 # -----------------------------------------------------
 echo
-echo "[*] Disabling first boot service..."
+echo "[*] Menonaktifkan first boot service..."
 rm -f /etc/xdg/autostart/firstboot.desktop
 
 echo
-echo "[✓] First boot initialization completed successfully"
-echo "[✓] System is ready for academic use"
+echo "[✓] First boot initialization selesai"
+echo "[✓] System siap dipakai"
 sleep 3
