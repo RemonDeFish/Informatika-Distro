@@ -1,20 +1,86 @@
 #!/bin/bash
-# Script automasi first boot
+# =====================================================
+#  Academic Lab Distro - First Boot Initialization
+# =====================================================
 
 LOGFILE="/var/log/firstboot.log"
 
-echo "[+] Script Firstboot memulai" | tee -a $LOGFILE
+exec > >(tee -a "$LOGFILE") 2>&1
 
-# Update repository
-apt update | tee -a $LOGFILE
+clear
 
-# Pesan selamat datang
-echo "===================================" | tee -a $LOGFILE
-echo " Selamat Datang ke RemonOS " | tee -a $LOGFILE
-echo " System siap digunakan " | tee -a $LOGFILE
-echo "===================================" | tee -a $LOGFILE
+cat << "EOF"
+=====================================================
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                              █████                                                                  
+    ███████████                                                █   █                               ▓███████░          ████████       
+    ███      ████                                                ██░█                            ████     ████      ███      ███     
+    ███        ███                                                   ░                          ██░         ███    ██         ███    
+    ███        ███    █████████     ██ ███████ ████████       ▓▒▒▒▒░░░▓    ███████████         ███           ███   ███               
+    ███        ██    ██       ███   ███      ███     ███    ▓▒░░      ░▒   ░██       ██        ██             ██    █████░           
+    ████████████    ██         ██   ██       ██       ██   ▓░     ░░  ░▒▒   ██       ██        ██             ██        ███████      
+    ███     ██      █████████████   ██       ██       ██   ▒░░         ░▒   ██       ██        ██             ██             ███     
+    ███      ███    ██              ██       ██       ██   ▒ ░   ░ ░  ░▒   ░██       ██        ███           ███              ███    
+    ███       ██░    ██       ███   ██       ██       ██   ▓░ ░░░   ░░▒░    ██       ██         ███         ███    ███        ██     
+    ███        ███    ██████████    ██░      ██       ██    ▒░░ ░░░░▒▓     ███       ██           ███████████       ███████████      
+                                                             ▓▒▒▒▒▓                                                                  
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+        Academic / Laboratory Distro
+=====================================================
+EOF
 
-# Hapus autostart agar hanya jalan sekali
+echo
+echo "[*] First boot initialization started..."
+echo "[*] Log file : $LOGFILE"
+sleep 2
+
+# -----------------------------------------------------
+# Check internet connection
+# -----------------------------------------------------
+echo "[*] Checking internet connection..."
+if ping -c 1 8.8.8.8 >/dev/null 2>&1; then
+    echo "[✓] Internet connection available"
+    apt update
+else
+    echo "[!] No internet connection detected"
+    echo "[!] Skipping system update"
+fi
+
+# -----------------------------------------------------
+# System information
+# -----------------------------------------------------
+echo
+echo "[*] System Information:"
+echo "Hostname : $(hostname)"
+echo "Kernel   : $(uname -r)"
+echo "User     : $(whoami)"
+echo "Date     : $(date)"
+
+# -----------------------------------------------------
+# Lab environment notice
+# -----------------------------------------------------
+echo
+echo "-----------------------------------------------------"
+echo " NOTICE:"
+echo " This system is running in LIVE LAB MODE."
+echo " All user data will be erased after reboot."
+echo "-----------------------------------------------------"
+
+sleep 2
+
+# -----------------------------------------------------
+# Disable first boot autostart (run once)
+# -----------------------------------------------------
+echo
+echo "[*] Disabling first boot service..."
 rm -f /etc/xdg/autostart/firstboot.desktop
 
-echo "[✓] First boot initialization completed" | tee -a $LOGFILE
+echo
+echo "[✓] First boot initialization completed successfully"
+echo "[✓] System is ready for academic use"
+sleep 3
